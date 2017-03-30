@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Goods */
+/* @var $model backend\models\Brand */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Goods', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Brands', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="goods-view">
+<div class="brand-view">
     <section class="content">
         <div class="bg_box" style="background:#fff;width: 100%;min-height: 935px;padding:10px 30px;">
             <h1><?= Html::encode($this->title) ?></h1>
@@ -30,38 +30,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'cate_id',
-            'cate_path',
-            'brand_id',
-            'goods_name',
-            'sub_name',
-            'type',
-            'market_price',
-            'price',
-            'event_price',
-            'event_start_date',
-            'event_end_date',
-            'stock',
-            'warn_number',
-            'free_maill',
-            'img_home',
-            'img_thumb',
-            'earn',
-            'is_add',
-            'reason',
-            'is_cash',
-            'is_alone_sale',
-            'is_coupon',
-            'is_refund',
-            'is_exchange',
+            'brand_name',
+            'capital',
+            'brand_logo',
+            'site_url:url',
+            'sort_order',
+            'is_show',
             'is_hot',
-            'spec_name_one',
-            'spec_name_two',
-            'sort',
-            'factory_id',
-            'is_del',
-            'last_modify',
-            'add_time',
+            'shop_pc',
+            'shop_wap',
+            'brand_desc',
+            'brand_detail:ntext',
         ],
     ]) ?>
         </div>

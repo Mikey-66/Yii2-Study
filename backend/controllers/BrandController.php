@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Goods;
-use backend\models\search\GoodsSearch;
+use backend\models\Brand;
+use backend\models\search\BrandSearch;
 use backend\controllers\BaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * GoodsController implements the CRUD actions for Goods model.
+ * BrandController implements the CRUD actions for Brand model.
  */
-class GoodsController extends BaseController
+class BrandController extends BaseController
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class GoodsController extends BaseController
     }
 
     /**
-     * Lists all Goods models.
+     * Lists all Brand models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new GoodsSearch();
+        $searchModel = new BrandSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -43,33 +43,10 @@ class GoodsController extends BaseController
             'dataProvider' => $dataProvider,
         ]);
     }
-    
-    
-    public function actionShow(){
-        
-        $searchModel = new GoodsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
-        return $this->render('show', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    
-    public function actionShow2(){
-        
-        $goods = Goods::findOne(45);
-        
-//        show($goods);exit;
-        
-        return $this->render('show2', [
-            'model' => $goods,
-        ]);
-    }
 
     /**
-     * Displays a single Goods model.
-     * @param integer $id
+     * Displays a single Brand model.
+     * @param string $id
      * @return mixed
      */
     public function actionView($id)
@@ -80,13 +57,13 @@ class GoodsController extends BaseController
     }
 
     /**
-     * Creates a new Goods model.
+     * Creates a new Brand model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Goods();
+        $model = new Brand();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -98,9 +75,9 @@ class GoodsController extends BaseController
     }
 
     /**
-     * Updates an existing Goods model.
+     * Updates an existing Brand model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -117,9 +94,9 @@ class GoodsController extends BaseController
     }
 
     /**
-     * Deletes an existing Goods model.
+     * Deletes an existing Brand model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -130,15 +107,15 @@ class GoodsController extends BaseController
     }
 
     /**
-     * Finds the Goods model based on its primary key value.
+     * Finds the Brand model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Goods the loaded model
+     * @param string $id
+     * @return Brand the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Goods::findOne($id)) !== null) {
+        if (($model = Brand::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

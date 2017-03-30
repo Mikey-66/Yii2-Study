@@ -3,15 +3,15 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-
 /* @var $this yii\web\View */
-/* @var $model backend\models\Goods */
+/* @var $model backend\models\Brand */
 
-$this->title = 'Create Goods';
-$this->params['breadcrumbs'][] = ['label' => 'Goods', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Update Brand: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Brands', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="goods-create">
+<div class="brand-update">
 
     <section class="content">
         
