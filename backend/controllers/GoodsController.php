@@ -35,7 +35,6 @@ class GoodsController extends BaseController
      */
     public function actionIndex()
     {
-        $this->layout = "admin";
         $searchModel = new GoodsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -92,7 +91,7 @@ class GoodsController extends BaseController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
+            return $this->render('create_new', [
                 'model' => $model,
             ]);
         }
