@@ -20,6 +20,9 @@ class StartController extends Controller{
      */
     public function actionIndex(){
         
+        echo date('Y-m-d H:i:s');exit;
+        echo Yii::getAlias('@app/migrations') . '<br/>';
+        exit;
         show(Yii::$app->request->baseUrl);
         exit;
         echo Yii::getAlias('@root'). '<br/>';
