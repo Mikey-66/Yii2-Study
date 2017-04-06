@@ -6,7 +6,10 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Goods */
 
-$this->title = 'Update Goods: ' . $model->id;
+$this->title = '编辑商品: ' . $model->id;
+$this->params['main-title'] = '商品管理';
+
+
 $this->params['breadcrumbs'][] = ['label' => 'Goods', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';

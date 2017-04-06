@@ -35,9 +35,12 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Goods', 'url' => ['/goods/index']]
     ];
+    
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
@@ -50,10 +53,12 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
+    
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
     ]);
+    
     NavBar::end();
     ?>
 
@@ -73,7 +78,7 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
-
+    
 <?php $this->endBody() ?>
 </body>
 </html>

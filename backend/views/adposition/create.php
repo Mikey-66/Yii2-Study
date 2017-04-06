@@ -5,18 +5,13 @@ use yii\helpers\Url;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Goods */
+/* @var $model backend\models\Adposition */
 
-// 标题显示
-$this->title = '新增商品';
-$this->params['main-title'] = '商品管理';
-
-// 面包屑参数
-$this->params['breadcrumbs'][] = ['label' => 'Goods', 'url' => ['index']];
+$this->title = 'Create Adposition';
+$this->params['breadcrumbs'][] = ['label' => 'Adpositions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
-<div class="goods-create">
+<div class="adposition-create">
 
     <section class="content">
         

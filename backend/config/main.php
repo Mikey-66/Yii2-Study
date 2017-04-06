@@ -11,7 +11,12 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'rbac' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu'
+        ]
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -37,6 +42,11 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        
+        # 下面这项配置 只需要也只能在common/config/main.php 中配置一次就行了
+//        'authManager' => [
+//            'class' => 'yii\rbac\DbManager'
+//        ],
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -47,5 +57,14 @@ return [
         */
         
     ],
+    'as access' => [
+            'class' => 'mdm\admin\components\AccessControl',
+            'allowActions' => [ //允许访问的节点，可自行添加
+                # controller/action  添加默认可以访问的节点
+                'rbac/*',//允许所有人访问admin节点及其子节点
+                'debug/*'
+            ]
+        ],
+    
     'params' => $params,
 ];

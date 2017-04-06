@@ -3,20 +3,15 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-
 /* @var $this yii\web\View */
-/* @var $model backend\models\Goods */
+/* @var $model backend\models\AdMeta */
 
-// 标题显示
-$this->title = '新增商品';
-$this->params['main-title'] = '商品管理';
-
-// 面包屑参数
-$this->params['breadcrumbs'][] = ['label' => 'Goods', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-
+$this->title = 'Update Ad Meta: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Ad Metas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="goods-create">
+<div class="ad-meta-update">
 
     <section class="content">
         

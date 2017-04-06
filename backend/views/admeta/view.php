@@ -4,15 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Goods */
+/* @var $model backend\models\AdMeta */
 
-$this->title = '详情查看: ' . $model->id;
-$this->params['main-title'] = '商品管理';
-
-$this->params['breadcrumbs'][] = ['label' => 'Goods', 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Ad Metas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="goods-view">
+<div class="ad-meta-view">
     <section class="content">
         <div class="bg_box" style="background:#fff;width: 100%;min-height: 935px;padding:10px 30px;">
             <h1><?= Html::encode($this->title) ?></h1>
@@ -32,37 +30,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'cate_id',
-            'cate_path',
-            'brand_id',
-            'goods_name',
-            'sub_name',
+            'name',
             'type',
-            'market_price',
-            'price',
-            'event_price',
-            'event_start_date',
-            'event_end_date',
-            'stock',
-            'warn_number',
-            'free_maill',
-            'img_home',
-            'img_thumb',
-            'earn',
-            'is_add',
-            'reason',
-            'is_cash',
-            'is_alone_sale',
-            'is_coupon',
-            'is_refund',
-            'is_exchange',
-            'is_hot',
-            'spec_name_one',
-            'spec_name_two',
+            'pos_id',
+            'store_id',
+            'begin_time',
+            'end_time',
+            'url:url',
+            'is_show',
             'sort',
-            'factory_id',
-            'is_del',
-            'last_modify',
+            'img',
+            'img_url:url',
+            'flash',
+            'flash_url:url',
+            'code',
+            'text',
+            'contactor',
+            'email:email',
+            'phone',
+            'site_id',
+            'relation_pos_id',
             'add_time',
         ],
     ]) ?>

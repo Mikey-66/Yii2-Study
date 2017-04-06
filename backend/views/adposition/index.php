@@ -4,22 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\search\GoodsSearch */
+/* @var $searchModel backend\models\search\AdpositionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-//show($this);exit;
-$this->title = '商品列表';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['main-title'] = '商品管理';
 
-//dump($this);exit;
+$this->title = 'Adpositions';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="goods-index">
+<div class="adposition-index">
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
             <div class="row">
                 
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
                 
                 <div class="col-md-4">
                     <div class="box box-primary">
@@ -28,7 +25,7 @@ $this->params['main-title'] = '商品管理';
                         </div>
 
                         <div class="box-body">
-<?= Html::a('Create Goods', ['create'], ['class' => 'btn btn-primary']) ?>&nbsp;&nbsp;
+<?= Html::a('Create Adposition', ['create'], ['class' => 'btn btn-primary']) ?>&nbsp;&nbsp;
                             
                             <div class="btn-group">
                                 <button type="button" class="btn  btn-default ">其他</button>
@@ -63,37 +60,11 @@ $this->params['main-title'] = '商品管理';
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'cate_id',
-            'cate_path',
-            'brand_id',
-            'goods_name',
-            // 'sub_name',
-            // 'type',
-            // 'market_price',
-            // 'price',
-            // 'event_price',
-            // 'event_start_date',
-            // 'event_end_date',
-            // 'stock',
-            // 'warn_number',
-            // 'free_maill',
-            // 'img_home',
-            // 'img_thumb',
-            // 'earn',
-            // 'is_add',
-            // 'reason',
-            // 'is_cash',
-            // 'is_alone_sale',
-            // 'is_coupon',
-            // 'is_refund',
-            // 'is_exchange',
-            // 'is_hot',
-            // 'spec_name_one',
-            // 'spec_name_two',
-            // 'sort',
-            // 'factory_id',
-            // 'is_del',
-            // 'last_modify',
+            'name',
+            'width',
+            'height',
+            'is_system',
+            // 'description',
             // 'add_time',
 
             ['class' => 'yii\grid\ActionColumn'],
