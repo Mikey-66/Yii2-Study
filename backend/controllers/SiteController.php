@@ -12,6 +12,10 @@ use common\models\LoginForm;
  */
 class SiteController extends BaseController
 {
+    
+    
+    public $defaultAction = 'index';   # 指定默认的动作
+    
     /**
      * @inheritdoc
      */
@@ -42,7 +46,18 @@ class SiteController extends BaseController
     }
 
     /**
-     * @inheritdoc
+     *   独立动作
+     * 
+     *   用类来申明"error" 动作
+     *   'error' => 'yii\web\ErrorAction',
+     * 
+     *   用配置数组申明 "view" 动作
+     *   'view' => [
+     *       'class' => 'yii\web\ViewAction',
+     *       'viewPrefix' => '',
+     *   ],
+     *   
+     *   @inheritdoc
      */
     public function actions()
     {
@@ -60,6 +75,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
+        
 //        $this->layout = "main";
         // 当前用户的身份实例。未认证用户则为 Null 。
         $identity = Yii::$app->user->identity;

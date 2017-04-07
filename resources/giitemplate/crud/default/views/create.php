@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <section class="content">
         
-        <div class="bg_box" style="background:#fff;width: 100%;min-height: 935px;padding:10px 30px;">
+        <div class="bg_box" style="background:#fff;width: 100%;padding:10px 30px;">
 
             <h3>
                 <?= "<?= " ?>Html::encode($this->title) ?>

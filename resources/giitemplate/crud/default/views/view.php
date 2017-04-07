@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
     <section class="content">
-        <div class="bg_box" style="background:#fff;width: 100%;min-height: 935px;padding:10px 30px;">
+        <div class="bg_box" style="background:#fff;width: 100%;padding:10px 30px;">
             <h1><?= "<?= " ?>Html::encode($this->title) ?></h1>
 
             <p>

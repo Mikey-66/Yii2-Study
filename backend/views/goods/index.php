@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\GoodsSearch */
@@ -56,7 +57,9 @@ $this->params['main-title'] = '商品管理';
                 </div>
 
                 <div class="box-body">
-    <?= GridView::widget([
+    <?php 
+    Pjax::begin();
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -98,7 +101,9 @@ $this->params['main-title'] = '商品管理';
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]); 
+    Pjax::end();
+    ?>
                 </div>
             </div>
         </div>
