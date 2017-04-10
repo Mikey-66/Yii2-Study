@@ -42,4 +42,30 @@ class BaseController extends Controller{
             ],
         ];
     }
+    
+    public function jsonMsg($code, $msg, $data=false, $url='', $transaction = null){
+        
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        if ($code == 200 && $transaction){
+            $transaction->commit();
+        }elseif ($code != 200 && $transaction){
+            $transaction->rollback();
+        }
+        
+        $json = [
+            'code' => (int) $code,
+            'msg' => $msg,
+        ];
+        
+        if ($data){
+            $json['data'] = $data;
+        }
+        
+        if ($url){
+            $json['url'] = $url;
+        }
+        
+        exit($json);
+    }
 }

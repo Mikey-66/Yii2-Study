@@ -50,6 +50,14 @@ class CategoryController extends BaseController
     public function actionCreate()
     {
         $model = new Category();
+        
+        if (Yii::$app->request->isPost){
+            
+            
+            show($_FILES);
+            show(Yii::$app->request->post());
+            exit;
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
