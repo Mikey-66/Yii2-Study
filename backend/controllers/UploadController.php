@@ -23,21 +23,15 @@ class UploadController extends BaseController{
         return md5(uniqid(microtime(true), true));
     }
 
-    protected function imgMsg($error=null, $initialPreview=[], $initialPreviewConfig=[], $initialPreviewThumbTags=[], $append = true){
-        
-        $res = [
-            'append' => $append
-        ];
-        
-        if ($error) $res['error'] = $error;
-        
-        if ($initialPreview) $res['initialPreview'] = $initialPreview;
-        
-        if ($initialPreviewConfig) $res['initialPreviewConfig'] = $initialPreviewConfig;
+    protected function imgMsg($error=null, $info = []){
         
         header('Content-type:application/json; charset=utf-8');
         
-        exit(json_encode($res));
+        if ($error){
+            exit(json_encode(['error' => $error]) );
+        }
+        
+        exit(json_encode($info));
     }
     
     /**
@@ -114,11 +108,27 @@ class UploadController extends BaseController{
         
         $fullName = $savePath . '/' . $fileName;
         
+        $str_del = dirname(Yii::$app->params['uploads_dir']);
+        
+        
         if (!$file->saveAs($fullName)){
             $this->imgMsg('图片上传失败');
         }
         
-        $this->imgMsg();
+        $this->imgMsg('', [
+            'path' => str_replace($str_del, '', $fullName),
+            'width' => $imageInfo[0],
+            'height' => $imageInfo[1],
+            'size' => filesize($fullName)
+        ]);
+    }
+    
+    /**
+     * 图片异步删除 实际上本方法没有真正删除图片，只供前端插件调用，真正删除是在表单提交时删除的
+     */
+    public function actionUploadDelete(){
+        header('Content-type:application/json; charset=utf-8');
+        exit(json_encode([]));
     }
     
 }

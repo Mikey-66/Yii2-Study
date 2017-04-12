@@ -8,6 +8,9 @@ use backend\models\search\CategorySearch;
 use backend\controllers\BaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Intervention\Image\ImageManager;
+use common\components\BaseApi;
+use yii\helpers\Url;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -51,26 +54,59 @@ class CategoryController extends BaseController
     {
         $model = new Category();
         
-        if (Yii::$app->request->isPost){
+        if ( $model->load(Yii::$app->request->post()) ){
             
-            
-            show($_FILES);
-            show(Yii::$app->request->post());
-            exit;
+            try{
+                
+                if ($model->parent_id){
+                    $cate = Category::findOne($model->parent_id);
+                    if (!$cate){
+                        $this->exception('分类不存在');
+                    }
+                }
+                
+                $model->cate_path = ':cate_path';
+                
+                if (!$model->validate()){
+                    $error = implode('', current($model->getErrors()));
+                    $this->exception($error);
+                }
+
+                if (!$model->save()){
+                    $error = implode('', current($model->getErrors()));
+                    $this->exception($error);
+                }
+                
+                if ($model->logo){
+                    $size = Yii::$app->params['thumb_config']['logo'];
+                    // 移动到正式目录
+                    $res = BaseApi::moveTempImg($model->logo, 'category/logo', [$size['width'], $size['height']]);
+                    
+                    if (!$res['status']){
+                        $this->exception($res['msg']);
+                    }
+                    
+                    $model->logo = $res['path'];
+                }
+                
+                $model->cate_path = isset($cate) ? $cate->cate_path . ',' . $model->id : '0,' . $model->id;
+                $model->update(false);
+
+                return $this->redirect(['view', 'id' => $model->id]);
+                
+            }catch (\Exception $e){
+                
+                Yii::$app->session->setFlash('model-error', [$e->getMessage()]);
+                
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            
-            if (Yii::$app->request->isPost){
-                Yii::$app->session->setFlash('model-error', $model->fetchErrors());
-            }
-            
-            return $this->render('create', [
+        return $this->render('create', [
                 'model' => $model,
-            ]);
-        }
+        ]);
     }
 
     /**
@@ -82,14 +118,69 @@ class CategoryController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        if ($model->load(Yii::$app->request->post())){
+            
+            try{
+                
+                if ($model->parent_id){
+                    $cate = Category::findOne($model->parent_id);
+                    if (!$cate){
+                        $this->exception('分类不存在');
+                    }
+                }
+                
+                $model->cate_path = isset($cate) ? $cate->cate_path . ',' . $model->id : '0,' . $model->id;
+                
+                if (!$model->validate()){
+                    $error = implode('', current($model->getErrors()));
+                    $this->exception($error);
+                }
+                
+                # logo 字段发生了变化
+                if ($model->isAttributeChanged('logo')){
+                    
+                    # 新图存在
+                    if ($model->logo){
+                        $size = Yii::$app->params['thumb_config']['logo'];
+                        // 移动到正式目录
+                        $res = BaseApi::moveTempImg($model->logo, 'category/logo', [$size['width'], $size['height']]);
+//                        $res = BaseApi::moveTempImg($model->logo, 'category/logo');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+                        if (!$res['status']){
+                            $this->exception($res['msg']);
+                        }
+
+                        $model->logo = $res['path'];
+                    }
+                    
+                    // 如果原图存在，删除以前的图片
+                    if ($oldimg = $model->getOldAttribute('logo')){
+                        $absPath = Yii::getAlias('@frontend') . '/web' .  $oldimg;
+                        @unlink($absPath);
+                    }
+                }
+                
+                if (!$model->save()){
+                    $error = implode('', current($model->getErrors()));
+                    $this->exception($error);
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+                
+            }catch (\Exception $e){
+                
+                Yii::$app->session->setFlash('model-error', [$e->getMessage()]);
+                
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
+        
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -120,4 +211,13 @@ class CategoryController extends BaseController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function back($msg, $defaultUrl = null) {
+        if ($msg){
+            Yii::$app->session->setFlash('model-error', $msg);
+        }
+        parent::goBack($defaultUrl);
+    }
+    
+    
 }

@@ -18,6 +18,10 @@ class BaseController extends Controller{
 
     public $layout = "admin";
     
+    public function exception($msg){
+        throw new \Exception($msg); 
+    }
+
     public function behaviors() {
         
         return [

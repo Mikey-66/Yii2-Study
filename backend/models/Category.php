@@ -22,6 +22,16 @@ use Yii;
  */
 class Category extends \backend\models\Base
 {
+    
+    public $img_logo;
+
+
+//    public function __construct() {
+//        parent::__construct();
+//        
+//        $this->on(self::EVENT_AFTER_FIND, [$this, 'checkImg']);    // 这样没查到一个都会触发一次
+//        
+//    }
     /**
      * @inheritdoc
      */
@@ -38,6 +48,8 @@ class Category extends \backend\models\Base
         return [
             [['name', 'parent_id', 'cate_path'], 'required'],
             [['id', 'is_show', 'is_recom', 'parent_id', 'sort', 'created_at', 'updated_at'], 'integer'],
+            ['is_show', 'in', 'range' => [0, 1], 'message' => '请选择是否显示'],
+            ['is_recom', 'in', 'range' => [0, 1], 'message' => '请选择是否推荐'],
             [['name'], 'string', 'max' => 100],
             [['logo', 'link', 'cate_path'], 'string', 'max' => 200],
             [['pinyin'], 'string', 'max' => 150],
@@ -85,6 +97,10 @@ class Category extends \backend\models\Base
             $this->updated_at = time();
         }
         
-        parent::save($runValidation, $attributeNames);
+        return parent::save($runValidation, $attributeNames);
     }
+    
+//    public function checkImg(){
+////        show(time());
+//    }
 }

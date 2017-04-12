@@ -1,4 +1,5 @@
 <?php
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
@@ -19,5 +20,14 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager'
         ],
+        
+        # 图片处理组件
+//        'imageManager' => [
+//            'class' => 'Intervention\Image\ImageManager',
+//        ],
+        
+        'imageManager' => function(){
+            return new \Intervention\Image\ImageManager();
+        }
     ],
 ];
