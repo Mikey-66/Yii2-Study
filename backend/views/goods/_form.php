@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\DateTimePicker;
@@ -447,7 +446,7 @@ $(document).ready(function(){
                     }
                 }
             },
-            placeholder: 'write something here...'
+//            placeholder: 'write something here...'
             
             
         });
@@ -479,5 +478,10 @@ $(document).ready(function(){
     });
 EOT;
 $this->registerJs($js, $this::POS_END);
+
+$css = <<<EOT
+.note-btn-group .btn-default {background-color:#FFF;}        
+EOT;
+$this->registerCss($css);
 
 ?>
