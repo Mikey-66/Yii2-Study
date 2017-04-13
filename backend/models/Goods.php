@@ -51,6 +51,8 @@ class Goods extends \backend\models\Base
     public $album_file;
     
     public $album_string;
+    
+    public $content;
 
     /**
      * @inheritdoc

@@ -10,6 +10,9 @@ use backend\models\Brand;
 use kartik\widgets\FileInput;
 use yii\helpers\Url;
 use kartik\tabs\TabsX;
+use backend\assets\SummernoteAsset;
+
+SummernoteAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Goods */
@@ -100,15 +103,10 @@ foreach ($tree as $key => $item){
             $form->field($model, 'sort')->textInput(['value' => $model->sort ? $model->sort : 100, 'type' => 'number'])->label('排序');
 
     $content2 = 
-            $form->field($model, 'cate_id')->dropDownList(ArrayHelper::map($tree, 'id', 'name'), [
-                'prompt' => ['text' => '请选择', 'options' => ['value' => '0', 'class' => 'prompt']],
-            ])->label('商品分类') . 
-
-            $form->field($model, 'brand_id')->dropDownList(ArrayHelper::map($brands, 'id', 'brand_name'), [
-                'prompt' => ['text' => '请选择', 'options' => ['value' => '0', 'class' => 'prompt']],
-            ])->label('品牌');
-
+            $form->field($model, 'content')->textarea()->label('商品详情');
+    
     $content3 =
+            
             Html::activeHiddenInput($model, 'img_home', ['id' => 'goods-img_home']) . 
             
             $form->field($model, 'img_home_file')->widget(FileInput::className(), [
@@ -423,3 +421,63 @@ foreach ($tree as $key => $item){
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php
+$js = <<<EOT
+$(document).ready(function(){
+        $('#goods-content').summernote({
+            height: 300,              // set editor height
+            minHeight: null,          // set minimum height of editor
+            maxHeight: null,          // set maximum height of editor
+            focus: false,          // set focus to editable area after initializing summernote
+            lang: 'zh-CN',
+//            toolbar: [
+//                        // [groupName, [list of button]]
+//                        ['style', ['bold', 'italic', 'underline', 'clear']],
+//                        ['font', ['strikethrough', 'superscript', 'subscript']],
+//                        ['fontsize', ['fontsize']],
+//                        ['color', ['color']],
+//                        ['para', ['ul', 'ol', 'paragraph']],
+//                        ['height', ['height']]
+//                      ],
+            callbacks: {
+                onImageUpload: function(files) {
+                    return;
+                    for (var i=0; i<files.length; i++){
+                        send(files[i]);
+                    }
+                }
+            },
+            placeholder: 'write something here...'
+            
+            
+        });
+        
+//        $('#summernote').summernote('disable');
+
+        function send(file){
+            if (file.type.includes('image')) {
+                var name = file.name.split(".");
+                name = name[0];
+                var data = new FormData();
+                data.append('file', file);
+                $.ajax({
+                    url: "{{route('upload')}}",
+                    type: 'POST',
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: 'JSON',
+                    data: data,
+                    success: function (json) {
+                        console.log(json);
+                        $('#summernote').summernote('insertImage', json.data.url, name);
+                    }
+                });
+            }
+        }
+        
+    });
+EOT;
+$this->registerJs($js, $this::POS_END);
+
+?>
