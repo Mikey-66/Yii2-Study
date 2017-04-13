@@ -73,8 +73,11 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => DataColumn::className(), // this line is optional
                 'attribute' => 'name',
-                'format' => 'text',
                 'label' => '分类名称',
+                'format' => 'html',   # 重要  e.g. `"raw"`, `"text"`, `"html"`, `['date', 'php:Y-m-d']`
+                'value' => function($row, $key, $index, $column){
+                    return Html::a($row['name'], Url::to(['category/index', 'CategorySearch[parent_id]'=>$row['id']]));
+                }
             ],
             
             # 上面这一列可以简写为：

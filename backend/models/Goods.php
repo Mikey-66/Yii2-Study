@@ -43,6 +43,15 @@ use Yii;
  */
 class Goods extends \backend\models\Base
 {
+    
+    public $img_home_file;
+    
+    public $img_thumb_file;
+    
+    public $album_file;
+    
+    public $album_string;
+
     /**
      * @inheritdoc
      */
@@ -59,11 +68,13 @@ class Goods extends \backend\models\Base
         return [
             [['cate_id', 'cate_path', 'goods_name', 'price', 'add_time'], 'required'],
             [['cate_id', 'brand_id', 'type', 'stock', 'warn_number', 'free_maill', 'is_add', 'is_cash', 'is_alone_sale', 'is_coupon', 'is_refund', 'is_exchange', 'is_hot', 'sort', 'factory_id', 'is_del'], 'integer'],
+            [['type'], 'in', 'range' => [0, 1], 'message' => '请选择{attribute}'],
             [['market_price', 'price', 'event_price', 'earn'], 'number'],
             [['event_start_date', 'event_end_date', 'last_modify', 'add_time'], 'safe'],
             [['cate_path', 'sub_name', 'img_home', 'img_thumb', 'reason'], 'string', 'max' => 200],
             [['goods_name'], 'string', 'max' => 100],
             [['spec_name_one', 'spec_name_two'], 'string', 'max' => 20],
+            ['album_string', 'required', 'message' => '请上传商品图册']
         ];
     }
 
@@ -79,7 +90,7 @@ class Goods extends \backend\models\Base
             'brand_id' => '品牌编号',
             'goods_name' => '名称',
             'sub_name' => '副标题',
-            'type' => '商品类型 默认0 0普通商品 1工厂直购',
+            'type' => '商品类型', // 默认0 0普通商品 1工厂直购
             'market_price' => '市场价',
             'price' => '购买价',
             'event_price' => '活动价 默认0',
@@ -87,7 +98,7 @@ class Goods extends \backend\models\Base
             'event_end_date' => '活动结束日期',
             'stock' => '库存 默认0',
             'warn_number' => '库存警告数',
-            'free_maill' => '是否包邮 默认0',
+            'free_maill' => '是否包邮', // 默认0
             'img_home' => '首页展示图片',
             'img_thumb' => '中等缩略图片路径',
             'earn' => '赚多少钱',
@@ -106,6 +117,7 @@ class Goods extends \backend\models\Base
             'is_del' => '是否删除',
             'last_modify' => '最后修改时间',
             'add_time' => '发布日期',
+            'album_string' => '商品相册'
         ];
     }
 }

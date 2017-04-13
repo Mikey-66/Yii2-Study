@@ -159,6 +159,7 @@ foreach ($tree as $key => $item){
     )?>
 
     <?= $form->field($model, 'sort')->textInput([
+        'value' => $model->sort ? $model->sort : 100,
         'type' => 'number'
     ]) ?>
     

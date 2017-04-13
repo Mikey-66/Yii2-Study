@@ -73,14 +73,30 @@ class GoodsController extends BaseController
     public function actionCreate()
     {
         $model = new Goods();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        
+        if ($model->load(Yii::$app->request->post())){
+            
+            try {
+                
+                if (!$model->save()){
+                    $error = implode('', current($model->getErrors()));
+                    $this->exception($error);
+                }
+                
+                return $this->redirect(['view', 'id' => $model->id]);
+            }catch(\Exception $e){
+                Yii::$app->session->setFlash('model-error', $e->getMessage());
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
+        
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+        
+        
     }
 
     /**
@@ -92,14 +108,27 @@ class GoodsController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        
+        if ($model->load(Yii::$app->request->post())){
+            
+            try{
+                if (!$model->save()){
+                    $error = implode('', current($model->getErrors()));
+                    $this->exception($error);
+                }
+                
+                return $this->redirect(['view', 'id' => $model->id]);
+            }catch (\Exception $e){
+                Yii::$app->session->setFlash('model-error', $e->getMessage());
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         }
+        
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**

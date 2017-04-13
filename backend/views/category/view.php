@@ -31,7 +31,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'logo',
+            # 可以不用设置attribute， 此时label 和 value 必须设置
+            [
+                'label' => 'label1',
+                'value' => 100 
+            ],
+            # 下面是一个完整的例子
+            [
+                'attribute' => 'logo',
+                'format' => 'html',
+                'label' => '分类Logo',
+                'value' => function($model, $wdiget){
+                    return Html::img(Yii::$app->params['frontendUrl'] . $model->logo, ['class' => 'custom']);
+                },
+                'visible' => true,
+//                'contentOptions' => ['class' => 'bg-red'],
+                'captionOptions' => ['width' => '200'],
+            ],
+            # 以上可以简写如下
+//            'logo:text:分类Logo',
+            
             'pinyin',
             'link',
             'is_show',

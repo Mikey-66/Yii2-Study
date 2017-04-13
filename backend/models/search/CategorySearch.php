@@ -69,6 +69,9 @@ class CategorySearch extends Category
             return $dataProvider;
         }
         
+//        show($params);
+//        show($this->parent_id);exit;
+        
         $query->alias('t');
 
         // grid filtering conditions

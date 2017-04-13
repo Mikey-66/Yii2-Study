@@ -25,6 +25,8 @@ class CategoryController extends BaseController
     public function actionIndex()
     {
         $searchModel = new CategorySearch();
+        $searchModel->parent_id = 0;
+        
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
