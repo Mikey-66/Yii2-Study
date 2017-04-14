@@ -8,6 +8,8 @@ use backend\models\search\GoodsSearch;
 use backend\controllers\BaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\widgets\ActiveForm;
+use yii\web\Response;
 
 /**
  * GoodsController implements the CRUD actions for Goods model.
@@ -74,9 +76,18 @@ class GoodsController extends BaseController
     {
         $model = new Goods();
         
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post())){
             
             try {
+                
+//                show(Yii::$app->request->post());
+//                
+//                exit('ok');
                 
                 if (!$model->save()){
                     $error = implode('', current($model->getErrors()));

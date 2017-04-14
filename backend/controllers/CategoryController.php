@@ -158,7 +158,7 @@ class CategoryController extends BaseController
                     
                     // 如果原图存在，删除以前的图片
                     if ($oldimg = $model->getOldAttribute('logo')){
-                        $absPath = Yii::getAlias('@frontend') . '/web' .  $oldimg;
+                        $absPath = Yii::getAlias('@backend') . '/web' .  $oldimg;
                         @unlink($absPath);
                     }
                 }

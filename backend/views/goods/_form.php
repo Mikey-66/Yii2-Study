@@ -10,6 +10,8 @@ use kartik\widgets\FileInput;
 use yii\helpers\Url;
 use kartik\tabs\TabsX;
 use backend\assets\SummernoteAsset;
+use kartik\widgets\SwitchInput;
+
 
 SummernoteAsset::register($this);
 
@@ -35,7 +37,9 @@ foreach ($tree as $key => $item){
     
     <?php 
     $content1 =
-            $form->field($model, 'cate_id')->dropDownList(ArrayHelper::map($tree, 'id', 'name'), [
+            $form->field($model, 'cate_id', [
+                'enableAjaxValidation' => true
+            ])->dropDownList(ArrayHelper::map($tree, 'id', 'name'), [
                 'prompt' => ['text' => '请选择', 'options' => ['value' => '0', 'class' => 'prompt']],
             ])->label('商品分类') . 
 
@@ -229,9 +233,9 @@ foreach ($tree as $key => $item){
                 'options' => [
                     'style' => 'display:none;'
                 ],
-//                'selectors' => [
-//                    'container' => '.field-goods-album_file',
-//                ]
+                'selectors' => [
+                    'container' => '.field-goods-album_file',
+                ]
             ])->hiddenInput() . 
             
             $form->field($model, 'album_file')->widget(FileInput::className(), [
@@ -346,6 +350,13 @@ foreach ($tree as $key => $item){
     $content5 =
             $form->field($model, 'is_add')->dropDownList(['1'=>'是', '0' => '否'], [
             ])->label('是否上架') . 
+            
+//            $form->field($model, 'is_add')->widget(SwitchInput::classname(), [
+////                'pluginOptions' => [
+////                    'onColor' => 'success',
+////                    'offColor' => 'danger',
+////                ]
+//            ])->label('是否上架') . 
 
             $form->field($model, 'reason')->textInput(['maxlength' => true]) . 
 
@@ -421,6 +432,7 @@ foreach ($tree as $key => $item){
 
 </div>
 <?php
+$upload_url = Url::to(['upload/upload-image']);
 $js = <<<EOT
 $(document).ready(function(){
         $('#goods-content').summernote({
@@ -440,7 +452,6 @@ $(document).ready(function(){
 //                      ],
             callbacks: {
                 onImageUpload: function(files) {
-                    return;
                     for (var i=0; i<files.length; i++){
                         send(files[i]);
                     }
@@ -459,8 +470,9 @@ $(document).ready(function(){
                 name = name[0];
                 var data = new FormData();
                 data.append('file', file);
+                data.append('fileName', 'file');
                 $.ajax({
-                    url: "{{route('upload')}}",
+                    url: "{$upload_url}",
                     type: 'POST',
                     contentType: false,
                     cache: false,
@@ -468,8 +480,7 @@ $(document).ready(function(){
                     dataType: 'JSON',
                     data: data,
                     success: function (json) {
-                        console.log(json);
-                        $('#summernote').summernote('insertImage', json.data.url, name);
+                        $('#goods-content').summernote('insertImage', json.path, name);
                     }
                 });
             }

@@ -76,7 +76,10 @@ class Goods extends \backend\models\Base
             [['cate_path', 'sub_name', 'img_home', 'img_thumb', 'reason'], 'string', 'max' => 200],
             [['goods_name'], 'string', 'max' => 100],
             [['spec_name_one', 'spec_name_two'], 'string', 'max' => 20],
-            ['album_string', 'required', 'message' => '请上传商品图册']
+            ['album_string', 'required', 'message' => '请上传商品图册'],
+            
+            # 下面这条规则必须提交到服务器才能验证
+            [['cate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cate_id' => 'id']],
         ];
     }
 
